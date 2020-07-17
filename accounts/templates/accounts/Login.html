@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+
+{%block content%}
+
+
+<br />
+<br />
+<br />
+<h1>Login!<h1/>
+<br>
+<form method = "POST" action ="{%url 'login'%}">
+
+{%csrf_token%}
+Username:
+<br>
+<input type="text" name="username" />
+<br>
+Password:
+<br />
+<input type="text" name="password" />
+<br>
+<br />
+<br />
+<input class="btn btn-primary" type="submit" value="Login" />
+<br/>
+<br/>
+<br/>
+</form>
+{%if error%}
+{{error}}
+{% endif %}
+
+{%endblock%}
+
+
