@@ -13,33 +13,16 @@ class Product(models.Model):
 	votes_total=models.IntegerField(default=1)
 	image=models.ImageField(upload_to='images/')
 	icon=models.ImageField(upload_to='images/')
+	video=models.FileField(upload_to='videos/',default=1)
 	body=models.TextField()
-	pub_date_pretty=models.DateTimeField()
+	#pub_date_pretty=models.DateTimeField()
 	hunter=models.ForeignKey(User,on_delete=models.CASCADE)
-#TODO
-#pub_date_pretty
-#hunter
 
 	def __str__(self):
-			return self.title
+		return self.title
 		
-		def __str__(self):
-			return self.url
-		
-		def __str__(self):
-			return self.pub_date
-		
-		def __str__(self):
-			return self.votes_total
-
-		def __str__(self):
-			return self.image
+	def summary(self):
+		return self.body[:200]
 			
-		def __str__(self):
-			return self.icon
-
-		def summary(self):
-			return self.body[:200]
-			
-		def pub_date_pretty
-			return self.pub_date.strftime('%b %e %y')
+	def pub_date_pretty(self):
+		return self.pub_date.strftime('%b %e %y')

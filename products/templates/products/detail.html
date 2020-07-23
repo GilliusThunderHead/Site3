@@ -1,0 +1,71 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+
+{%
+{%block content%}
+{% if user.is_authenticated %}
+
+{%if error%}
+{{error}}
+{% endif %}
+
+<div class="row pb-5">
+<h1 class="jumbotron-heading">Hey {{user.username}}</h1>
+</div>
+
+<div class="container">
+<div class="row">
+	<div class="col-2">
+		<img src="{{product.icon.url}}" class="img-fluid"/>	
+	</div>
+	<div class="col-10">
+		<a href="{{product.url}}"><h1>{{product.title}}</h1></a>
+	</div>	
+</div>
+</div>
+<br>
+<br>
+<div class="container">
+<div class="row">
+	<div class="col-3">
+		<img src="{{product.image.url}}" class="img-fluid"/>	
+	</div>
+	<div class="col-5">
+		<img src="{{product.video.url}}" class="img-fluid"/>	
+	</div>
+	<div class="col-4">
+		<!--Javascript below links to hidden form below which submits a call to the rl 'upvote'-->
+		<a href="javascript:{document.getElementById('upvote').submit()}" <button class="btn btn-primary btn-lg btn-block">Likes <span class="oi oi-thumb-up"></span> {{product.votes_total}} </button></a>
+	</div>	
+</div>
+</div>
+<br>
+<br>
+<div class="container">
+<div class="row">
+	<div class="col-4">
+		<h4>Submitted by {{product.hunter.username}} </h4>	
+	</div>
+	<div class="col-4 text-right">
+		<h4> {{product.pub_date_pretty}} </h4>	
+	</div>	
+</div>
+</div>
+<br>
+<br>
+<div class="container">
+<div class="row">
+	<div class="col-4">
+		<p>{{product.body}} </p>	
+	</div>
+</div>
+</div>
+<br>
+<!--Hidden upvote form. Submitted by Javascript code above.-->
+<form id="upvote" method="POST" action="{% url 'upvote' product.id %}">
+	{%csrf_token%}
+	<input type="hidden">
+</form>
+
+{%endif%}
+{%endblock%}

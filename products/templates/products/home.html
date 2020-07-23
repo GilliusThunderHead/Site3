@@ -4,9 +4,29 @@
 
 {%block content%}
 
-<h1 class="jumbotron-heading">Hi {{ user.username }}!</h1>
-<h2> Welcome to the home page</h2>
-<img class="card-img-left" width="20%" height="20%" src= "{% static 'underconstruction.jpg' %}">
+<h1 class="jumbotron-heading">Ol'Mate {{user.username}}</h1>
+<br>
+
+{%for product in products.all%}
+<div class="row pt-3">
+	<div class="col-2" onclick="window.location='{% url 'detail' product.id%}';" style="cursor: pointer;" >
+		<img src="{{product.icon.url}}" class="img-fluid"/>
+	</div>
+	<div class="col-6" onclick="window.location='{% url 'detail' product.id%}';" style="cursor: pointer;" >>
+		<h1>{{product.title}}</h1></a>
+		<p>{{product.summary}} </p>
+	</div>
+	<div class="col-2">
+		<a href="javascript:{document.getElementById('upvote{{product.id}}').submit()}" <button class="btn btn-primary btn-lg btn-block">Likes <span class="oi oi-thumb-up"></span> {{product.votes_total}}</button></a>
+	</div>
+	
+	<form id="upvote{{product.id}}" method="POST" action="{% url 'upvote' product.id %}">
+	{%csrf_token%}
+	<input type="hidden">
+</form>
+</div>
+{% endfor%}
+
 
 {%endblock%}
 
